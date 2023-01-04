@@ -22,7 +22,7 @@ app.get("/user/attendance",authenticatejwt, getUserAttendance);
 app.get("/user/getQRCode", authenticatejwt, generateQrString);
 app.post("/user/markAttendance", authenticatejwt, markAttendance);
 
-const PORT = 8080;
+const PORT = process.env.PORT;
 app.listen(PORT, ()=>{
-	console.log("Server is running on port 8080...")
+	console.log(`Server is running on port ${PORT}...`)
 });
