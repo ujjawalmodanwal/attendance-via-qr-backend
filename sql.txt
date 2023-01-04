@@ -1,0 +1,21 @@
+CREATE TABLE users (
+	userid VARCHAR NOT NULL UNIQUE,
+	name VARCHAR NOT NULL,
+	department VARCHAR NOT NULL,
+	class VARCHAR NOT NULL,
+	email VARCHAR UNIQUE NOT NULL,
+	contact VARCHAR NOT NULL, 
+	isadmin BOOL DEFAULT false,
+	year INT NOT NULL,
+	password VARCHAR NOT NULL,
+	PRIMARY KEY (userid)
+);
+
+
+
+CREATE TABLE attendance(
+	userid VARCHAR NOT NULL UNIQUE,
+	in_time TIMESTAMP NOT NULL,
+	out_time TIMESTAMP,
+	FOREIGN KEY(userid) REFERENCES users(userid)
+);
