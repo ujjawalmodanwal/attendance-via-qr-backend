@@ -167,7 +167,9 @@ const generateQrString = async(req, res)=>{
 const markAttendance = async (req, res)=>{
 	try {
 		const QRString = req.body.QRString;
+		console.log('1',QRString);
 		const findString = await pool.query(`SELECT qrid, active FROM qrcode WHERE qrid='${QRString}' AND active=true;`);
+		console.log('2',findString);
 		if(findString.rowCount){
 			const out_time_case = await pool.query(`SELECT * FROM attendance WHERE userid='${req.user.userid}' AND out_time IS NULL;`);
 			if(out_time_case.rowCount){
