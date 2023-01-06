@@ -109,7 +109,7 @@ const updateUserDetails = async(req, res)=>{
 
 const getUserAttendance = async(req, res) => {
 	if(req.user.isadmin){
-		const getAllUserAttendace = await pool.query(`SELECT users.userid, users.name, users.department, users.class, users.year, CAST(( (attendance.in_time AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Kolkata') AS TIME) AS in_time, CAST(( (attendance.out_time AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Kolkata') AS TIME) AS out_time FROM attendance LEFT JOIN users ON attendance.userid=users.userid WHERE Date(in_time)='${req.query.requestedDate}';`)
+		const getAllUserAttendace = await pool.query(`SELECT users.userid, users.name, users.department, users.class, users.year, CAST(( attendance.in_time AT TIME ZONE 'Asia/Kolkata') AS TIME) AS in_time, CAST(( attendance.out_time AT TIME ZONE 'Asia/Kolkata') AS TIME) AS out_time FROM attendance LEFT JOIN users ON attendance.userid=users.userid WHERE Date(in_time)='${req.query.requestedDate}';`)
 		if(getAllUserAttendace.rowCount){
 			res.send(getAllUserAttendace.rows);
 		}
@@ -118,7 +118,7 @@ const getUserAttendance = async(req, res) => {
 		}
 	}
 	else{
-		const getAllUserAttendace = await pool.query(`SELECT users.userid, users.name, users.department, users.class, users.year, CAST(attendance.in_time AS TIME), CAST(attendance.out_time AS TIME) FROM attendance LEFT JOIN users ON attendance.userid=users.userid WHERE Date(in_time)='${req.query.requestedDate}' AND attendance.userid='${req.user.userid}';`)
+		const getAllUserAttendace = await pool.query(`SELECT users.userid, users.name, users.department, users.class, users.year, CAST((attendance.in_time  AT TIME ZONE 'Asia/Kolkata')AS TIME), CAST((attendance.out_time  AT TIME ZONE 'Asia/Kolkata')AS TIME) FROM attendance LEFT JOIN users ON attendance.userid=users.userid WHERE Date(in_time)='${req.query.requestedDate}' AND attendance.userid='${req.user.userid}';`)
 		if(getAllUserAttendace.rowCount){
 			res.send(getAllUserAttendace.rows);
 		}
